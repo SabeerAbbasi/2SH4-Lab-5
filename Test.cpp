@@ -1,8 +1,8 @@
-#include "cute.h"
-#include "ide_listener.h"
-#include "xml_listener.h"
-#include "cute_runner.h"
-#include "Matrix.h"
+#include "cute/cute.h"
+#include "cute/ide_listener.h"
+#include "cute/xml_listener.h"
+#include "cute/cute_runner.h"
+#include "SLLNode.h"
 #include "SLLSet.h"
 #include <iostream>
 
@@ -34,7 +34,16 @@ void testSLLSetIntArray() {
         ASSERT_EQUAL(expectedSet,listObj2.toString());
 	}
 
+void testSLLSetIntArraySabeer() {
 
+        int arr[] = {9, 2, 4, 7, 6, 9}; // this list
+
+        SLLSet listObj2 = SLLSet(arr,6);
+        string expectedSet = "9, 2, 4, 7, 6, 9";
+        int expectedSize = 6;
+        ASSERT_EQUAL(expectedSize,listObj2.getSize());
+        ASSERT_EQUAL(expectedSet,listObj2.toString());
+    }
 
 
 void testCopy() {
@@ -57,6 +66,25 @@ void testCopy() {
 
 	}
 
+void testCopySabeer() {
+
+        int arr[] = {9, 2, 4, 7, 6, 9}; // this list
+        SLLSet listObj2 =  SLLSet(arr,6);
+        SLLSet copied = listObj2.copy();
+        copied.add(99);
+        string expectedObj2 = "9, 2, 4, 7, 6, 9";
+        string expectedCopied = "9, 2, 4, 7, 6, 9, 99";
+        int expectedObj2Size = 6;
+        int expectedCopiedSize = 7;
+
+        ASSERT_EQUAL(expectedObj2Size,listObj2.getSize());
+        ASSERT_EQUAL(expectedObj2,listObj2.toString());
+
+        ASSERT_EQUAL(expectedCopiedSize,copied.getSize());
+        ASSERT_EQUAL(expectedCopied,copied.toString());
+
+
+    }
 
 void testIsInTrue() {
 
@@ -72,6 +100,19 @@ void testIsInTrue() {
 
 	}
 
+void testIsInTrueSabeer() {
+
+    int arr[] = {9, 2, 4, 7, 6, 9}; // this list
+    SLLSet listObj2 =  SLLSet(arr,6);
+
+        int in = 4;
+
+        bool expected = true;
+
+        ASSERT_EQUAL(expected,listObj2.isIn(in));
+
+
+    }
 
 void testIsInFalse() {
 
@@ -165,6 +206,23 @@ void testAdd4() {
 
 	}
 
+void testAddSabeer() {
+
+    int arr[] = {1, 2, 3, 6, 9}; // this list
+    SLLSet listObj2 =  SLLSet(arr,5);
+
+
+        int addfirst = 4;  // test add
+
+        string expectedObj2 = "1, 2, 3, 4, 6, 9";
+        int expectedObj2Size = 6;
+
+        listObj2.add(addfirst);
+        ASSERT_EQUAL(expectedObj2Size,listObj2.getSize());
+        ASSERT_EQUAL(expectedObj2,listObj2.toString());
+
+    }
+
 void testRemove1() {
 
     int arr[] = {1, 2, 3, 7, 8}; // this list
@@ -252,6 +310,24 @@ void testRemove4() {
 
 	}
 
+void testRemoveSabeer() {
+
+    int arr[] = {1, 2, 3, 6, 9}; // this list
+    SLLSet listObj2 =  SLLSet(arr,5);
+
+        int notremove = 4;
+
+        //test remove
+
+        listObj2.remove(notremove);
+
+        string expectedObj2 = "1, 2, 3, 6, 9";
+        int expectedObj2Size = 5;
+
+        ASSERT_EQUAL(expectedObj2Size,listObj2.getSize());
+        ASSERT_EQUAL(expectedObj2,listObj2.toString());
+
+    }
 
 void testUnion1() {
         // test union
@@ -330,6 +406,26 @@ void testUnion4() {
 
 
 	}
+
+void testUnionSabeer() {
+        // test union
+    int arr[] = {1, 2, 3, 6, 8, 9}; // this list
+    SLLSet listObj2 =  SLLSet(arr,6);
+    int uni1[] = {0, 2, 4, 8, 11, 200};
+
+
+        SLLSet listObj5 = SLLSet(uni1,6);
+        SLLSet listObj6 = listObj2.setUnion(listObj5);
+
+        string expected = "0, 1, 2, 3, 4, 6, 8, 9, 11, 200";
+        int expectedSize = 10;
+
+        ASSERT_EQUAL(expectedSize,listObj6.getSize());
+        ASSERT_EQUAL(expected,listObj6.toString());
+
+
+
+    }
 
 void testIntersection1() {
 
@@ -418,6 +514,28 @@ void testIntersection4() {
 
 	}
 
+void testIntersectionSabeer() {
+
+    int arr[] = {1, 2, 3, 6, 9}; // this list
+    SLLSet listObj2 =  SLLSet(arr,5);
+
+    int arr2[] = {1,2,6}; // this list
+    SLLSet listObj11 =  SLLSet(arr2,3);
+
+
+        SLLSet listObj12 = listObj2.intersection(listObj11);
+
+        string expected = "1, 2, 6";
+        int expectedSize = 3;
+
+        ASSERT_EQUAL(expectedSize,listObj12.getSize());
+        ASSERT_EQUAL(expected,listObj12.toString());
+
+
+
+
+    }
+
 void testDifference1() {
 
 	      // parameters inpt here
@@ -505,6 +623,33 @@ void testDifference4() {
 
 	}
 
+void testDifferenceSabeer() {
+
+          // parameters inpt here
+
+    int arr[] = {0, 2, 4, 6, 8}; // this list
+    SLLSet listObj2 =  SLLSet(arr,5);
+
+
+
+
+    int diff2[] = {0, 2}; // test difference
+    // test difference
+    SLLSet listObj21 = SLLSet(diff2,2);
+    SLLSet listObj22 = listObj2.difference(listObj21);
+
+        string expected = "4, 6, 8";
+        int expectedSize = 3;
+
+        ASSERT_EQUAL(expectedSize,listObj22.getSize());
+        ASSERT_EQUAL(expected,listObj22.toString());
+
+
+
+
+
+    }
+
 void testUnionSLLSetArray() {
 
         int arr1[] = {0, 1, 2};
@@ -529,6 +674,30 @@ void testUnionSLLSetArray() {
 
 	}
 
+void testUnionSLLSetArraySabeer() {
+
+        int arr1[] = {0, 1, 2, 3};
+        int arr2[] = {1, 2,};
+        int arr3[] = {0, 1, 2};
+        int arr4[] = {9, 10};
+        SLLSet listObj100 = SLLSet(arr1,4);
+        SLLSet listObj99 = SLLSet(arr2,2);
+        SLLSet listObj98 = SLLSet(arr3,3);
+        SLLSet listObj97 = SLLSet(arr4,2);
+        SLLSet listObj96 = SLLSet();
+        SLLSet Array[] = {listObj100, listObj99, listObj98, listObj97, listObj96}; // test static SLLSet union(sArray)
+
+         SLLSet listObj23 = SLLSet::setUnion(Array,5);
+
+         string expected = "0, 1, 2, 3, 9, 10";
+         int expectedSize = 6;
+
+         ASSERT_EQUAL(expectedSize,listObj23.getSize());
+         ASSERT_EQUAL(expected,listObj23.toString());
+
+
+    }
+
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
@@ -539,29 +708,37 @@ bool runAllTests(int argc, char const *argv[]) {
     s.push_back(CUTE(testSLLSet));
     s.push_back(CUTE(testSLLSetIntArray));
     s.push_back(CUTE(testCopy));
+    s.push_back(CUTE(testCopySabeer));
     s.push_back(CUTE(testIsInTrue));
+    s.push_back(CUTE(testIsInTrueSabeer));
     s.push_back(CUTE(testIsInFalse));
-    s.push_back(CUTE( testAdd1));
+    s.push_back(CUTE(testAdd1));
     s.push_back(CUTE(testAdd2));
     s.push_back(CUTE(testAdd3));
     s.push_back(CUTE(testAdd4));
+    s.push_back(CUTE(testAddSabeer));
     s.push_back(CUTE(testRemove1));
     s.push_back(CUTE(testRemove2));
     s.push_back(CUTE(testRemove3));
     s.push_back(CUTE(testRemove4));
+    s.push_back(CUTE(testRemoveSabeer));
     s.push_back(CUTE(testUnion1));
     s.push_back(CUTE(testUnion2));
     s.push_back(CUTE(testUnion3));
     s.push_back(CUTE(testUnion4));
+    s.push_back(CUTE(testUnionSabeer));
     s.push_back(CUTE(testIntersection1));
     s.push_back(CUTE(testIntersection2));
     s.push_back(CUTE(testIntersection3));
     s.push_back(CUTE(testIntersection4));
+    s.push_back(CUTE(testIntersectionSabeer));
     s.push_back(CUTE(testDifference1));
     s.push_back(CUTE(testDifference2));
     s.push_back(CUTE(testDifference3));
     s.push_back(CUTE(testDifference4));
+    s.push_back(CUTE(testDifferenceSabeer));
     s.push_back(CUTE(testUnionSLLSetArray));
+    s.push_back(CUTE(testUnionSLLSetArraySabeer));
 
 
 
